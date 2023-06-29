@@ -13,6 +13,6 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: gcr.io/cloudrun-demo-316301/flask-web-app@sha256:f2924994b11d9bca4f9d523f3fd606623a6925ee534c38792f565e8727833bd7
+        image: gcr.io/cloudrun-demo-316301/flask-app@sha256:f2924994b11d9bca4f9d523f3fd606623a6925ee534c38792f565e8727833bd7
         ports:
           - containerPort: 8080
