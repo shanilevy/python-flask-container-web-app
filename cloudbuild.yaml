@@ -65,13 +65,6 @@ steps:
     args: ['-c','sed -i "s,MONGO_COLLECTION_NAME,$$COLLECTION_NAME," kubernetes.yaml']
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        sed -i "s/MONGO_COLLECTION_NAME/$$COLLECTION_NAME/g" test.yaml
-    secretEnv: ['COLLECTION_NAME']
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
     args: ['-c', 'cat kubernetes.yaml']
   - name: 'gcr.io/cloud-builders/gcloud'
     id: 'set test core image in yamls'
