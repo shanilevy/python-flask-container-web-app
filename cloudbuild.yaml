@@ -50,7 +50,9 @@ steps:
   #  - --location=asia-east1-a
   #  - --cluster=web-app-cluster
   # [START cloudbuild-delivery]
-
+  - name: 'ubuntu'
+    id: 'set test core image in yamls'
+    args: ['bash','-c','sed -i "s,TEST_IMAGE_NAME,gcr.io/cloudrun-demo-316301/flask-app:$COMMIT_SHA,"kubernetes.yaml']
   - name: 'gcr.io/cloud-builders/kubectl'
     id: Deploy
     args:
