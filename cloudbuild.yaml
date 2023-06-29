@@ -67,16 +67,20 @@ steps:
 # [END cloudbuild_python_yaml]
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
-    secretEnv: ["CONNECTION_STRING"]
+    secretEnv: ['CONNECTION_STRING']
     args: ['-c','sed -i "s,MONGO_CONNECTION_STRING,$$CONNECTION_STRING," kubernetes.yaml']
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
-    secretEnv: ["DB_NAME"]
+    secretEnv: ['DB_NAME']
     args: ['-c','sed -i "s,MONGO_DB_NAME,$$DB_NAME," kubernetes.yaml']
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
-    secretEnv: ["COLLECTION_NAME"]
+    secretEnv: ['COLLECTION_NAME']
     args: ['-c','sed -i "s,MONGO_COLLECTION_NAME,$$COLLECTION_NAME," kubernetes.yaml']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args: ['-c', 'echo collection=$$COLLECTION_NAME']
+    secretEnv: ['COLLECTION_NAME']
 availableSecrets:
   secretManager:
   - versionName: projects/$PROJECT_ID/secrets/CONNECTION_STRING/versions/latest
