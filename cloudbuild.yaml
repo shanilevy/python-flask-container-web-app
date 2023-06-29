@@ -42,7 +42,7 @@ steps:
   #         '--region', 'us-central1', '--platform', 'managed', 
   #         '--allow-unauthenticated']
   # [END cloudbuild_python_deploy_yaml]
-  - name: "gcr.io/cloud-builders/gke-deploy"
+  - name: 'gcr.io/cloud-builders/gke-deploy'
     args:
     - run
     - --filename=kubernetes.yaml
