@@ -45,7 +45,7 @@ steps:
   - name: "gcr.io/cloud-builders/gke-deploy"
     args:
     - run
-    - --filename=k8s/
+    - --filename=kubernetes.yaml
     - --image= gcr.io/$PROJECT_ID/flask-app:$SHORT_SHA
     - --location=asia-east1-a
     - --cluster=web-app-cluster
