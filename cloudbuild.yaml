@@ -79,7 +79,11 @@ steps:
     args: ['-c','sed -i "s,MONGO_COLLECTION_NAME,$$COLLECTION_NAME," kubernetes.yaml']
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
-    args: ['-c', 'echo collection=$$COLLECTION_NAME']
+    #args: ['-c', 'echo collection=$$COLLECTION_NAME']
+    args:
+      - '-c'
+      - |
+        sed -i "s/MONGO_COLLECTION_NAME/$${COLLECTION_NAME}/g" kubernetes.yaml
     secretEnv: ['COLLECTION_NAME']
 availableSecrets:
   secretManager:
