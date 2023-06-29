@@ -36,11 +36,17 @@ steps:
   
   # [START cloudbuild_python_deploy_yaml]
   # Deploy to Cloud Run
-  - name: google/cloud-sdk
-    args: ['gcloud', 'run', 'deploy', 'helloworld-${SHORT_SHA}', 
-           '--image=gcr.io/$PROJECT_ID/flask-web-app:${SHORT_SHA}', 
-           '--region', 'us-central1', '--platform', 'managed', 
-           '--allow-unauthenticated']
+  #- name: google/cloud-sdk
+  #  args: ['gcloud', 'run', 'deploy', 'helloworld-${SHORT_SHA}', 
+  #         '--image=gcr.io/$PROJECT_ID/flask-web-app:${SHORT_SHA}', 
+  #         '--region', 'us-central1', '--platform', 'managed', 
+  #         '--allow-unauthenticated']
   # [END cloudbuild_python_deploy_yaml]
-  
+  - name: "gcr.io/cloud-builders/gke-deploy"
+    args:
+    - run
+    - --filename=k8s/
+    - --image= flask-app
+    - --location=asia-east1-a
+    - --cluster=web-app-cluster
 # [END cloudbuild_python_yaml]

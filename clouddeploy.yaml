@@ -1,0 +1,16 @@
+apiVersion: deploy.cloud.google.com/v1beta1
+kind: DeliveryPipeline
+metadata:
+  name: flask-app
+description: Hello World Deployment Pipeline 
+serialPipeline:
+  stages:
+  - targetId: development
+---
+apiVersion: deploy.cloud.google.com/v1beta1
+kind: Target
+metadata:
+  name: development
+description: Development Environment
+gke:
+  cluster: projects/PROJECT_ID/locations/us-central1/clusters/staging
