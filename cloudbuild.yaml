@@ -87,7 +87,7 @@ steps:
     secretEnv: ['COLLECTION_NAME']
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
-    args: ['-c', 'cat test.yaml']
+    args: ['-c', 'cat kubernetes.yaml']
 availableSecrets:
   secretManager:
   - versionName: projects/$PROJECT_ID/secrets/CONNECTION_STRING/versions/latest
