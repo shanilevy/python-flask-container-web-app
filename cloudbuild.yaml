@@ -64,9 +64,6 @@ steps:
     secretEnv: ['COLLECTION_NAME']
     args: ['-c','sed -i "s,MONGO_COLLECTION_NAME,$$COLLECTION_NAME," kubernetes.yaml']
   - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args: ['-c', 'cat kubernetes.yaml']
-  - name: 'gcr.io/cloud-builders/gcloud'
     id: 'set test core image in yamls'
     entrypoint: 'bash'
     args: ['-c','sed -i "s,TEST_IMAGE_NAME,gcr.io/$PROJECT_ID/flask-app:$COMMIT_SHA," kubernetes.yaml']
