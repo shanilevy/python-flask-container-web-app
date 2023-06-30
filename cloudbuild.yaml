@@ -74,8 +74,8 @@ steps:
     - '-f'
     - 'kubernetes.yaml'
     env:
-    - 'CLOUDSDK_COMPUTE_REGION=asia-east1-a'
-    - 'CLOUDSDK_CONTAINER_CLUSTER=web-app-cluster'
+    - 'CLOUDSDK_COMPUTE_REGION=us-west1'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=argolis-gke1'
 # [END cloudbuild_python_yaml]
 availableSecrets:
   secretManager:
