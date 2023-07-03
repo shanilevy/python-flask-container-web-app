@@ -34,48 +34,31 @@ steps:
     #args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/flask-web-app:${SHORT_SHA}']
     args: ['push', 'gcr.io/$PROJECT_ID/flask-app:$COMMIT_SHA']
   # [END cloudbuild_python_push_yaml]
-  
-  # [START cloudbuild_python_deploy_yaml]
-  # Deploy to Cloud Run
-  #- name: google/cloud-sdk
-  #  args: ['gcloud', 'run', 'deploy', 'helloworld-${SHORT_SHA}', 
-  #         '--image=gcr.io/$PROJECT_ID/flask-web-app:${SHORT_SHA}', 
-  #         '--region', 'us-central1', '--platform', 'managed', 
-  #         '--allow-unauthenticated']
-  # [END cloudbuild_python_deploy_yaml]
-  #- name: 'gcr.io/cloud-builders/gke-deploy'
-  #  args:
-  #  - run
-  #  - --filename=kubernetes.yaml
-  #  - --image= "gcr.io/$PROJECT_ID/flask-app:$COMMIT_SHA"
-  #  - --location=asia-east1-a
-  #  - --cluster=web-app-cluster
-  # [START cloudbuild-delivery]
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     secretEnv: ['CONNECTION_STRING']
-    args: ['-c','sed -i "s,MONGO_CONNECTION_STRING,$$CONNECTION_STRING," kubernetes.yaml']
+    args: ['-c','sed -i "s,MONGO_CONNECTION_STRING,$$CONNECTION_STRING," kubernetes_private.yaml']
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     secretEnv: ['DB_NAME']
-    args: ['-c','sed -i "s,MONGO_DB_NAME,$$DB_NAME," kubernetes.yaml']
+    args: ['-c','sed -i "s,MONGO_DB_NAME,$$DB_NAME," kubernetes_private.yaml']
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     secretEnv: ['COLLECTION_NAME']
-    args: ['-c','sed -i "s,MONGO_COLLECTION_NAME,$$COLLECTION_NAME," kubernetes.yaml']
+    args: ['-c','sed -i "s,MONGO_COLLECTION_NAME,$$COLLECTION_NAME," kubernetes_private.yaml']
   - name: 'gcr.io/cloud-builders/gcloud'
     id: 'set test core image in yamls'
     entrypoint: 'bash'
-    args: ['-c','sed -i "s,TEST_IMAGE_NAME,gcr.io/$PROJECT_ID/flask-app:$COMMIT_SHA," kubernetes.yaml']
-  - name: 'gcr.io/cloud-builders/kubectl'
-    id: Deploy
-    args:
-    - 'apply'
-    - '-f'
-    - 'kubernetes.yaml'
-    env:
-    - 'CLOUDSDK_COMPUTE_REGION=asia-east1-a'
-    - 'CLOUDSDK_CONTAINER_CLUSTER=web-app-cluster'
+    args: ['-c','sed -i "s,TEST_IMAGE_NAME,gcr.io/$PROJECT_ID/flask-app:$COMMIT_SHA," kubernetes_private.yaml']
+  # - name: 'gcr.io/cloud-builders/kubectl'
+  #   id: Deploy
+  #   args:
+  #   - 'apply'
+  #   - '-f'
+  #   - 'kubernetes.yaml'
+  #   env:
+  #   - 'CLOUDSDK_COMPUTE_REGION=asia-east1-a'
+  #   - 'CLOUDSDK_CONTAINER_CLUSTER=web-app-cluster'
 # [END cloudbuild_python_yaml]
 availableSecrets:
   secretManager:

@@ -27,7 +27,7 @@ spec:
         run: web
     spec:
       containers:
-      - image: gcr.io/shanilevy-615-2023063002023400/flask-app:3dc5f6e81977a5a6a04f5c9fd4c663d80d5fb141 #us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0
+      - image: TEST_IMAGE_NAME #gcr.io/shanilevy-615-2023063002023400/flask-app:3dc5f6e81977a5a6a04f5c9fd4c663d80d5fb141 #us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0
         imagePullPolicy: IfNotPresent
         name: web
         envFrom:
