@@ -25,14 +25,14 @@ steps:
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-           'us-west1-docker.pkg.dev/$PROJECT_ID/flask-app:$COMMIT_SHA', '.']
+           'us-west1-docker.pkg.dev/$PROJECT_ID/flask-app/flask-app:$COMMIT_SHA', '.']
   # [END cloudbuild_python_image_yaml]
 
   # [START cloudbuild_python_push_yaml]
   # Docker push to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     #args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/flask-web-app:${SHORT_SHA}']
-    args: ['push', 'gcr.io/$PROJECT_ID/flask-app:$COMMIT_SHA']
+    args: ['push', 'us-west1-docker.pkg.dev/$PROJECT_ID/flask-app/flask-app:$COMMIT_SHA']
   # [END cloudbuild_python_push_yaml]
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
@@ -49,7 +49,7 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     id: 'set test core image in yamls'
     entrypoint: 'bash'
-    args: ['-c','sed -i "s,TEST_IMAGE_NAME,gcr.io/$PROJECT_ID/flask-app:$COMMIT_SHA," kubernetes_private.yaml']
+    args: ['-c','sed -i "s,TEST_IMAGE_NAME,us-west1-docker.pkg.dev/$PROJECT_ID/flask-app/flask-app:$COMMIT_SHA," kubernetes_private.yaml']
   # - name: 'gcr.io/cloud-builders/kubectl'
   #   id: Deploy
   #   args:
