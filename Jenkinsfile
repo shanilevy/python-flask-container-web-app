@@ -1,9 +1,11 @@
 pipeline {
     agent any 
 
-	  environment {
-		    DOCKERHUB_CREDENTIALS = credentials('docker-creds')
-	  }
+	stage('Checkout') {
+        steps {
+            checkout scm
+        }
+    }
 
     stages {
         stage('Build Docker Image with new code') {
