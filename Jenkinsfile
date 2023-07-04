@@ -1,18 +1,17 @@
 pipeline {
     agent any 
 
-	stage('Checkout') {
-        steps {
-            checkout scm
-        }
-
-    }
     // stage('Clone Repo') { 
     //   // Get some code from a GitHub repository
     //   git url:'https://github.com/shanilevy/python-flask-container-web-app.git',branch:'main' //update your forked repo
     // }
 
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build image') {
             steps {
                 script {
