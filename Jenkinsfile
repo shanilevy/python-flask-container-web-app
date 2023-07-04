@@ -13,9 +13,12 @@ pipeline {
     // }
 
     stages {
-        stage('Build Docker Image with new code') {
-             // build docker image
-            dockerImage = docker.build("us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_NUMBER}")
+        stage('Build image') {
+            steps {
+                script {
+                    app = docker.build("us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID}")
+                    }
+            }
         }
       
         stage('Test') { 
@@ -25,15 +28,15 @@ pipeline {
                 echo 'Test Stage Complete'
             }
         }
-        stage('Docker Login') {
-            steps {
-                script {
-                    docker.withRegistry('us-west1-docker.pkg.dev', 'gcr:jenkins-sa') {
-                        dockerImage.push()
-                    }
-                }
-			} 
-        }
+        // stage('Docker Login') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry('us-west1-docker.pkg.dev', 'gcr:jenkins-sa') {
+        //                 dockerImage.push()
+        //             }
+        //         }
+		// 	} 
+        // }
 
     }
 }
