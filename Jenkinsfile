@@ -14,14 +14,16 @@ pipeline {
         }
         stage('Build image') {
             steps {
-                script {
-                    app = docker.build("us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID}")
-                    }
+                container('docker') {
+                    sh 'docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} .'
+                 }
+                // script {
+                //     app = docker.build("us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID}")
+                //     }
             }
         }
       
         stage('Test') { 
-            agent any
             steps {
                 echo 'No test is being performed. Shown for demo purposes.'
                 echo 'Test Stage Complete'
