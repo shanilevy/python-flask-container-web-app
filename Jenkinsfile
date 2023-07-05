@@ -1,6 +1,8 @@
 pipeline {
-    agent any 
-
+    //agent any 
+    agent  {
+        label 'dind-agent'
+    }
     // stage('Clone Repo') { 
     //   // Get some code from a GitHub repository
     //   git url:'https://github.com/shanilevy/python-flask-container-web-app.git',branch:'main' //update your forked repo
@@ -14,9 +16,13 @@ pipeline {
         }
         stage('Build image') {
             steps {
-                container('docker') {
-                    sh 'docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} .'
-                 }
+                //container('docker') {
+                 //   sh 'docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} .'
+                 //}
+                 script {
+                    sh "docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} ."
+                }
+                 
                 // script {
                 //     app = docker.build("us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID}")
                 //     }
