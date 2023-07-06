@@ -4,7 +4,7 @@ pipeline {
         PROJECT_ID = 'shanilevy-615-2023063002023400'
         CLUSTER_NAME = 'shanilevy-615-2023063002023400'
         LOCATION = 'us-west1'
-        CREDENTIALS_ID = 'jenkins-sa'
+        CREDENTIALS_ID = 'shanilevy-615-2023063002023400'
     }
     //agent  {
     //    label 'dind-agent'
