@@ -65,8 +65,8 @@ pipeline {
                     //sh "sed -i 's/COLLECTION_NAME/${env.MONGO_COLL}/g' kubernetes_private.yaml"
                     sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl"
                     sh "chmod +x ./kubectl"
-                    sh "cat kubernetes_private.yaml"
-                    sh "./kubectl apply --filename /var/jenkins_home/workspace/flask-app/kubernetes_private.yaml --validate=false"
+                    echo "This is the directory of the secret file $MONGO_S"
+                    //sh "./kubectl apply --filename /var/jenkins_home/workspace/flask-app/kubernetes_private.yaml --validate=false"
                     //step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'kubernetes_private.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
                 }
             }
