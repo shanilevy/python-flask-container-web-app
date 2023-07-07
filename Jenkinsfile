@@ -50,7 +50,7 @@ pipeline {
                 script {
                     kubernetesDeploy(configs: "kubernetes_private.yaml")
                 }
-    }
+            }
         }
         // stage('Docker Login') {
         //     steps {
