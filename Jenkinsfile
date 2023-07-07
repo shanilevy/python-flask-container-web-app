@@ -50,6 +50,8 @@ pipeline {
                 //sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
                 sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl"
                 sh "chmod +x ./kubectl"
+                sh "pwd"
+                sh "ls -la"
                 sh "./kubectl apply --filename /var/jenkins_home/workspace/flask-app/hello_world.yaml"
                 //step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'kubernetes_private.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
