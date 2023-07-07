@@ -58,7 +58,7 @@ pipeline {
                         sed -i 's|MONGO_DB_NAME|$MONGO_DB|' kubernetes_private.yaml
                         sed -i 's|MONGO_COLLECTION_NAME|${env.MONGO_COLL}|' kubernetes_private.yaml
                         cat kubernetes_private.yaml
-                        echo "My secret text is '${MONGO_STRING}'"
+                        echo "My secret text is '${env.MONGO_STRING}'"
                    '''
                 //sh "sed -i 's/MONGO_CONNECTION_STRING/${env.MONGO_STRING}/g' kubernetes_private.yaml"
                 //sh "sed -i 's/DB_NAME/${env.MONGO_DB}/g' kubernetes_private.yaml"
