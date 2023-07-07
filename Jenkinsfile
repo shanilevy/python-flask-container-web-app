@@ -48,7 +48,7 @@ pipeline {
             // }
             steps {
                 kubernetes {
-                    cloud 'kubernetes'
+                    //cloud 'kubernetes'
                     sh 'kubectl get pods'
                 }
                 // Create namespace if it doesn't exist 
