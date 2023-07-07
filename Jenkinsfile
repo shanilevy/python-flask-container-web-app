@@ -21,6 +21,9 @@ pipeline {
             }
         }
         stage('Build image') {
+            agent  {
+                    label 'dind-agent'
+            }
             steps {
                 //container('docker') {
                  //   sh 'docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} .'
@@ -28,9 +31,6 @@ pipeline {
                 //  script {
                 //     sh "docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} ."
                 // }
-                agent  {
-                    label 'dind-agent'
-                }
                 script {
                     app = docker.build("us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID}")
                 }
