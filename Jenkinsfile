@@ -52,7 +52,7 @@ pipeline {
             steps {
                 //sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
                 //sh "sed -i 's/TEST_IMAGE_NAME/us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:f16546c6c2b5d61729c0411b776b322ab5883591/g' kubernetes_private.yaml"
-                withCredentials([file(credentialsId: 'mongo-string', variable: 'MONGO_S')]) {
+                withCredentials([file(credentialsId: 'mongosecret', variable: 'MONGO_S')]) {
                     // sh '''
                     //         sed -i 's|TEST_IMAGE_NAME|us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:f16546c6c2b5d61729c0411b776b322ab5883591|' kubernetes_private.yaml
                     //         sed -i 's|MONGO_CONNECTION_STRING|$MONGO_S|' kubernetes_private.yaml
