@@ -40,3 +40,14 @@ spec:
       targetPort: 80
       nodePort: 30081   
   type: NodePort
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: basic-ingress
+spec:
+  defaultBackend:
+    service:
+      name: hello-world
+      port:
+        number: 8080
