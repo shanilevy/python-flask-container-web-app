@@ -5,9 +5,6 @@ pipeline {
         CLUSTER_NAME = 'shanilevy-615-2023063002023400-us-west1'
         LOCATION = 'us-west1'
         CREDENTIALS_ID = 'gke'
-        MONGO_STRING = credentials('mongo-string')
-        MONGO_DB = "restaurant_reviews" //credentials('mongo-db')
-        MONGO_COLL = credentials('mongo-coll')
     }
     //agent  {
     //    label 'dind-agent'
@@ -23,20 +20,22 @@ pipeline {
                 checkout scm
             }
         }
-        // stage('Build image') {
-        //     steps {
-        //         //container('docker') {
-        //          //   sh 'docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} .'
-        //          //}
-        //         //  script {
-        //         //     sh "docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} ."
-        //         // }
-                 
-        //         script {
-        //             app = docker.build("us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID}")
-        //         }
-        //     }
-        // }
+        stage('Build image') {
+            agent  {
+                    label 'dind-agent'
+            }
+            steps {
+                //container('docker') {
+                 //   sh 'docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} .'
+                 //}
+                //  script {
+                //     sh "docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} ."
+                // }
+                script {
+                    app = docker.build("us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID}")
+                }
+            }
+        }
       
         stage('Test') { 
             steps {
