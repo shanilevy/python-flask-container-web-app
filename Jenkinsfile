@@ -47,8 +47,9 @@ pipeline {
             //     step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'kubernetes_private.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             // }
             steps {
-                script {
-                    kubernetesDeploy(configs: "kubernetes_private.yaml")
+                container('kubectl') {
+                // Create namespace if it doesn't exist
+                    sh("kubectl get pods") 
                 }
             }
         }
