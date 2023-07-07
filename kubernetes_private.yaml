@@ -91,13 +91,13 @@ spec:
       name: web
       port:
         number: 8080
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mongosecret
-#type: Opaque
-stringData:
-  CONNECTION_STRING: MONGO_CONNECTION_STRING
-  DB_NAME: MONGO_DB_NAME
-  COLLECTION_NAME: MONGO_COLLECTION_NAME
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: mongosecret
+# #type: Opaque
+# stringData:
+#   CONNECTION_STRING: MONGO_CONNECTION_STRING
+#   DB_NAME: MONGO_DB_NAME
+#   COLLECTION_NAME: MONGO_COLLECTION_NAME
