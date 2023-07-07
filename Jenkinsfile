@@ -53,7 +53,7 @@ pipeline {
                 //sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
                 //sh "sed -i 's/TEST_IMAGE_NAME/us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:f16546c6c2b5d61729c0411b776b322ab5883591/g' kubernetes_private.yaml"
                 sh '''
-                        sed -i -e "s/MONGO_CONNECTION_STRING/$MONGO_STRING/g" kubernetes_private.yaml
+                        sed -i "s/MONGO_CONNECTION_STRING/$MONGO_STRING/g" kubernetes_private.yaml
                         cat kubernetes_private.yaml
                    '''
                 //sh "sed -i 's/MONGO_CONNECTION_STRING/${env.MONGO_STRING}/g' kubernetes_private.yaml"
