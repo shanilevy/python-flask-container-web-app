@@ -5,8 +5,8 @@ pipeline {
         CLUSTER_NAME = 'shanilevy-615-2023063002023400-us-west1'
         LOCATION = 'us-west1'
         CREDENTIALS_ID = 'gke'
-        MONGO_STRING     = credentials('mongo-string')
-        MONGO_DB = credentials('mongo-db')
+        MONGO_STRING = credentials('mongo-string')
+        MONGO_DB = restaurant_reviews //credentials('mongo-db')
         MONGO_COLL = credentials('mongo-coll')
     }
     //agent  {
