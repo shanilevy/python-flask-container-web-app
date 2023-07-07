@@ -20,20 +20,20 @@ pipeline {
                 checkout scm
             }
         }
-        // stage('Build image') {
-        //     steps {
-        //         //container('docker') {
-        //          //   sh 'docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} .'
-        //          //}
-        //         //  script {
-        //         //     sh "docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} ."
-        //         // }
+        stage('Build image') {
+            steps {
+                //container('docker') {
+                 //   sh 'docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} .'
+                 //}
+                //  script {
+                //     sh "docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} ."
+                // }
                  
-        //         script {
-        //             app = docker.build("us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID}")
-        //         }
-        //     }
-        // }
+                script {
+                    app = docker.build("us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID}")
+                }
+            }
+        }
       
         stage('Test') { 
             steps {
