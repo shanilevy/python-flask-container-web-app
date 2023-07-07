@@ -47,8 +47,11 @@ pipeline {
             //     step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'kubernetes_private.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             // }
             steps {
-                // Create namespace if it doesn't exist
-                    sh("kubectl get pods") 
+                kubernetes {
+                    cloud 'kubernetes'
+                    sh("kubectl get pods")
+                }
+                // Create namespace if it doesn't exist 
             }
         }
         // stage('Docker Login') {
