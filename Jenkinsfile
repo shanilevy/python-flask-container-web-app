@@ -65,8 +65,10 @@ pipeline {
                 sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl"
                 sh "chmod +x ./kubectl"
                 //sh "cat kubernetes_private.yaml"
-                sh "./kubectl apply --filename /var/jenkins_home/workspace/flask-app/kubernetes_private.yaml --validate=false"
-                //step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'kubernetes_private.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+                sh "echo spring.datasource.password=${env.MONGO_STRING} >> application.txt"
+                sh "cat application.text"
+                //sh "./kubectl apply --filename /var/jenkins_home/workspace/flask-app/kubernetes_private.yaml --validate=false"
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'kubernetes_private.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
         }
         // stage('Docker Login') {
