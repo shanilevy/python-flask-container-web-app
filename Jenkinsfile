@@ -2,9 +2,9 @@ pipeline {
     agent any 
     environment {
         PROJECT_ID = 'shanilevy-615-2023063002023400'
-        CLUSTER_NAME = 'shanilevy-615-2023063002023400'
+        CLUSTER_NAME = 'shanilevy-615-2023063002023400-us-west1'
         LOCATION = 'us-west1'
-        CREDENTIALS_ID = 'shanilevy-615-2023063002023400'
+        CREDENTIALS_ID = 'gke'
     }
     //agent  {
     //    label 'dind-agent'
@@ -47,11 +47,8 @@ pipeline {
             //     step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'kubernetes_private.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             // }
             steps {
-                //kubernetes {
-                    //cloud 'kubernetes'
-                    sh 'kubectl get pods'
-                //}
-                // Create namespace if it doesn't exist 
+                //sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'kubernetes_private.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
         }
         // stage('Docker Login') {
