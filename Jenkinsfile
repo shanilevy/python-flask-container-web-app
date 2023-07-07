@@ -6,7 +6,7 @@ pipeline {
         LOCATION = 'us-west1'
         CREDENTIALS_ID = 'gke'
         MONGO_STRING = credentials('mongo-string')
-        MONGO_DB = restaurant_reviews //credentials('mongo-db')
+        MONGO_DB = 'restaurant_reviews' //credentials('mongo-db')
         MONGO_COLL = credentials('mongo-coll')
     }
     //agent  {
