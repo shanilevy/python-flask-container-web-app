@@ -6,7 +6,7 @@ pipeline {
         LOCATION = 'us-west1'
         CREDENTIALS_ID = 'gke'
         MONGO_STRING = credentials('mongo-string')
-        MONGO_DB = 'restaurant_reviews' //credentials('mongo-db')
+        MONGO_DB = "restaurant_reviews" //credentials('mongo-db')
         MONGO_COLL = credentials('mongo-coll')
     }
     //agent  {
@@ -55,7 +55,7 @@ pipeline {
                 sh '''
                         sed -i 's|TEST_IMAGE_NAME|us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:f16546c6c2b5d61729c0411b776b322ab5883591|' kubernetes_private.yaml
                         sed -i 's|MONGO_CONNECTION_STRING|$MONGO_STRING|' kubernetes_private.yaml
-                        sed -i 's|MONGO_DB_NAME|${env.MONGO_DB}|' kubernetes_private.yaml
+                        sed -i 's|MONGO_DB_NAME|$MONGO_DB|' kubernetes_private.yaml
                         sed -i 's|MONGO_COLLECTION_NAME|${env.MONGO_COLL}|' kubernetes_private.yaml
                         cat kubernetes_private.yaml
                    '''
