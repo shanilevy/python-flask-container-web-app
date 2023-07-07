@@ -52,7 +52,7 @@ pipeline {
                 sh "chmod +x ./kubectl"
                 sh "pwd"
                 sh "ls -la"
-                sh "./kubectl apply --filename /var/jenkins_home/workspace/flask-app/hello_world.yaml"
+                sh "./kubectl apply --filename /var/jenkins_home/workspace/flask-app/hello_world.yaml --validate=false"
                 //step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'kubernetes_private.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
         }
