@@ -63,6 +63,7 @@ pipeline {
                     sh "chmod +x ./kubectl"
                     sh "./kubectl delete secret mongosecret --ignore-not-found"
                     sh "./kubectl create secret generic mongosecret --from-env-file=${env.MONGO_S}"
+                    sh "cat kubernetes_private.yaml"
                     sh "./kubectl apply --filename kubernetes_private.yaml --validate=false"
                     //step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'kubernetes_private.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
                 }
