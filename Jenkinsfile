@@ -60,7 +60,8 @@ pipeline {
                     // sh '''
                     //         sed -i -e 's/TEST_IMAGE_NAME/${TAG}/g' kubernetes_private.yaml
                     // '''
-                    sh "sed -i 's/TEST_IMAGE_NAME/${TAG}' kubernetes_private.yaml"
+                    //sh "sed -i 's/TEST_IMAGE_NAME/${TAG}' kubernetes_private.yaml"
+                    sh "sed -i 's/latest/${VERSION}/g' kubernetes_private.yaml"
                     sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl"
                     sh "chmod +x ./kubectl"
                     sh "./kubectl delete secret mongosecret --ignore-not-found"

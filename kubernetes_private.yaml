@@ -27,7 +27,7 @@ spec:
         run: web
     spec:
       containers:
-      - image: TEST_IMAGE_NAME
+      - image: us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:latest
         imagePullPolicy: IfNotPresent
         name: web
         envFrom:
