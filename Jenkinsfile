@@ -1,53 +1,63 @@
 pipeline {
-    agent any 
-    environment {
-        PROJECT_ID = 'shanilevy-615-2023063002023400'
-        CLUSTER_NAME = 'shanilevy-615-2023063002023400-us-west1'
-        LOCATION = 'us-west1'
-        CREDENTIALS_ID = 'gke'
+  agent {
+    kubernetes {
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        spec:
+          containers:
+          - name: maven
+            image: maven:alpine
+            command:
+            - cat
+            tty: true
+          - name: docker
+            image: docker:latest
+            command:
+            - cat
+            tty: true
+            volumeMounts:
+             - mountPath: /var/run/docker.sock
+               name: docker-sock
+          volumes:
+          - name: docker-sock
+            hostPath:
+              path: /var/run/docker.sock    
+        '''
     }
-    //agent  {
-    //    label 'dind-agent'
-    //}
-    // stage('Clone Repo') { 
-    //   // Get some code from a GitHub repository
-    //   git url:'https://github.com/shanilevy/python-flask-container-web-app.git',branch:'main' //update your forked repo
-    // }
+  }
+  environment{
+      VERSION = "1.${env.BUILD_ID}"
+      PROJECT_ID = 'shanilevy-615-2023063002023400'
+      CLUSTER_NAME = 'shanilevy-615-2023063002023400-us-west1'
+      LOCATION = 'us-west1'
+      CREDENTIALS_ID = 'gke'
+  }
+  stages {
+    stage('Checkout') {
+        steps {
+            checkout scm
+        }
+    } 
 
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
+    stage('Build-Docker-Image') {
+      steps {
+        container('docker') {
+          sh 'docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:$VERSION .'
+            withDockerRegistry([credentialsId: "gcr:gke", url: "https://us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app"]) {
+                    //sh 'docker tag ${IMAGE_NAME}:${IMAGE_TAG} LOCATION-docker.pkg.dev/${PROJECT}/${REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}'
+                    sh 'docker push us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:$VERSION'
             }
         }
-        stage('Build image') {
-            steps {
-                //container('docker') {
-                 //   sh 'docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} .'
-                 //}
-                //  script {
-                //     sh "docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID} ."
-                // }
-                 
-                script {
-                    app = docker.build("us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:${env.BUILD_ID}")
-                }
-            }
-        }
-      
-        stage('Test') { 
-            steps {
-                echo 'No test is being performed. Shown for demo purposes.'
-                echo 'Test Stage Complete'
-            }
-        }
-        stage('Deploy to GKE') {
+      }
+    }
+    stage('Deploy to GKE') {
             steps {
                 //sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
                 //sh "sed -i 's/TEST_IMAGE_NAME/us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:f16546c6c2b5d61729c0411b776b322ab5883591/g' kubernetes_private.yaml"
                 withCredentials([file(credentialsId: 'mongosecret', variable: 'MONGO_S')]) {
                     sh '''
-                            sed -i 's|TEST_IMAGE_NAME|us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:f16546c6c2b5d61729c0411b776b322ab5883591|' kubernetes_private.yaml
+                            sed -i 's|TEST_IMAGE_NAME|us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:$VERSION|' kubernetes_private.yaml
                     '''
                     sh "curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl"
                     sh "chmod +x ./kubectl"
@@ -58,15 +68,5 @@ pipeline {
                 }
             }
         }
-        // stage('Docker Login') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry('us-west1-docker.pkg.dev', 'gcr:jenkins-sa') {
-        //                 dockerImage.push()
-        //             }
-        //         }
-		// 	} 
-        // }
-
-    }
+  }
 }
