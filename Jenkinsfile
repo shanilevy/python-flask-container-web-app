@@ -44,7 +44,7 @@ pipeline {
       steps {
         container('docker') {
           sh 'docker build -t us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:$VERSION .'
-            withDockerRegistry([credentialsId: "gcr:gke", url: "https://us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app"]) {
+            withDockerRegistry([credentialsId: "gcr:jenkins-sa-gcp", url: "https://us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app"]) {
                     sh 'docker push us-west1-docker.pkg.dev/shanilevy-615-2023063002023400/flask-app/flask-app:$VERSION'
             }
         }
