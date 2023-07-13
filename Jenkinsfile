@@ -31,7 +31,7 @@ pipeline {
       PROJECT_ID = 'shanilevy-615-2023063002023400'
       CLUSTER_NAME = 'shanilevy-615-2023063002023400-us-west1'
       LOCATION = 'us-west1'
-      CREDENTIALS_ID = 'gke'
+      CREDENTIALS_ID = 'jenkins-sa-gcp'
   }
   stages {
     stage('Checkout') {
